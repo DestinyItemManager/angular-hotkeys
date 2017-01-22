@@ -1,7 +1,7 @@
 /*! 
  * angular-hotkeys v1.7.0
  * https://chieffancypants.github.io/angular-hotkeys
- * Copyright (c) 2016 Wes Cruver
+ * Copyright (c) 2017 Wes Cruver
  * License: MIT
  */
 /*
@@ -13,8 +13,21 @@
  * License: MIT
  */
 
-(function() {
 
+(function (root, factory) {
+  if(typeof define === "function" && define.amd) {
+    // Now we're wrapping the factory and assigning the return
+    // value to the root (window) and returning it as well to
+    // the AMD loader.
+    define(["angular"], function(angular){
+      factory(angular);
+      return 'cfp.hotkeys';
+    });
+  } else if(typeof module === "object" && module.exports) {
+    factory(require("angular"));
+    module.exports = 'cfp.hotkeys';
+  }
+}(this, function(angular) {
   'use strict';
 
   angular.module('cfp.hotkeys', []).provider('hotkeys', ['$injector', function($injector) {
@@ -635,8 +648,7 @@
     // force hotkeys to run by injecting it. Without this, hotkeys only runs
     // when a controller or something else asks for it via DI.
   }]);
-
-})();
+}));
 
 /*global define:false */
 /**
@@ -1050,7 +1062,7 @@
     }
 
     function _belongsTo(element, ancestor) {
-        if (element === document) {
+        if (element === null || element === document) {
             return false;
         }
 
