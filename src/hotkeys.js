@@ -8,20 +8,7 @@
  */
 
 
-(function (root, factory) {
-  if(typeof define === "function" && define.amd) {
-    // Now we're wrapping the factory and assigning the return
-    // value to the root (window) and returning it as well to
-    // the AMD loader.
-    define(["angular"], function(angular){
-      factory(angular);
-      return 'cfp.hotkeys';
-    });
-  } else if(typeof module === "object" && module.exports) {
-    factory(require("angular"));
-    module.exports = 'cfp.hotkeys';
-  }
-}(this, function(angular) {
+(function(angular) {
   'use strict';
 
   angular.module('cfp.hotkeys', []).provider('hotkeys', function($injector) {
@@ -642,4 +629,8 @@
     // force hotkeys to run by injecting it. Without this, hotkeys only runs
     // when a controller or something else asks for it via DI.
   });
-}));
+})();
+
+if (typeof module === 'object' && module.exports) {
+  module.exports = 'cfp.hotkeys';
+}
